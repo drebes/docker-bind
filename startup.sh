@@ -19,7 +19,13 @@ cat <<- EOF > /etc/named.conf
 	    include "forwarders.conf";
 	};
 	
-	controls { } ;
+	// use the default rndc key
+	include "/etc/rndc.key";
+	
+	controls {
+	    inet 127.0.0.1 port 953
+	    allow { 127.0.0.1; } keys { "rndc-key"; };
+	};
 	
 	include "/etc/named.rfc1912.zones";
 	
@@ -37,6 +43,12 @@ cat <<- EOF > /etc/named.conf
 	    allow-update { key ${BIND_KEY_NAME} ; } ;
 	};
 EOF
+}
+
+function generate_rndc_key {
+  /usr/sbin/rndc-confgen -a -r /dev/urandom
+  chown root:named /etc/rndc.key
+  chmod 0644 /etc/rndc.key
 }
 
 function generate_forwarders_conf {
@@ -57,8 +69,10 @@ EOF
 }
 
 function generate_forward_zone {
-echo generating /var/named/dynamic/${BIND_DOMAIN}.db
-cat <<- EOF > /var/named/dynamic/${BIND_DOMAIN}.db
+ZONE_FILE=/var/named/dynamic/${BIND_DOMAIN}.db
+if [ ! -f  ${ZONE_FILE} ]; then
+echo generating ${ZONE_FILE}
+cat <<- EOF > ${ZONE_FILE} 
 	\$ORIGIN ${BIND_DOMAIN}.
 	\$TTL 86400
 	@           IN    SOA    $(hostname).${BIND_DOMAIN}.  hostmaster.${BIND_DOMAIN}. (
@@ -72,12 +86,14 @@ cat <<- EOF > /var/named/dynamic/${BIND_DOMAIN}.db
 	
 	$(hostname) IN 	  A      127.0.0.1
 EOF
+fi
 }
 
 function generate_reverse_zone {
-echo generating /var/named/dynamic/${BIND_REVERSE_DOMAIN}.db
-
-cat <<- EOF > /var/named/dynamic/${BIND_REVERSE_DOMAIN}.db
+ZONE_FILE=/var/named/dynamic/${BIND_REVERSE_DOMAIN}.db
+if [ ! -f  ${ZONE_FILE} ]; then
+echo generating ${ZONE_FILE}
+cat <<- EOF > ${ZONE_FILE} 
 	\$ORIGIN ${BIND_REVERSE_DOMAIN}. 
 	\$TTL 86400
 	@           IN    SOA    $(hostname).${BIND_DOMAIN}.  hostmaster.${BIND_DOMAIN}. (
@@ -89,9 +105,21 @@ cat <<- EOF > /var/named/dynamic/${BIND_REVERSE_DOMAIN}.db
 	
 	            IN    NS     $(hostname).${BIND_DOMAIN}.
 EOF
+fi
 }
 
+function term { 
+  echo "Caught SIGTERM signal!" 
+  rndc freeze
+  kill -TERM "$child" 2>/dev/null
+  rm -f /var/named/dynamic/${BIND_DOMAIN}.db.jnl
+  rm -f /var/named/dynamic/${BIND_REVERSE_DOMAIN}.db.jnl
+}
+
+trap term SIGTERM
+
 generate_named_conf
+generate_rndc_key
 generate_forwarders_conf
 generate_key
 generate_forward_zone
@@ -99,4 +127,7 @@ generate_reverse_zone
 
 chown -R named:named /var/named/*
 
-named -g -u named
+named -g -u named &
+child=$! 
+wait "$child"
+echo Exiting
