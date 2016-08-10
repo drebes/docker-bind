@@ -2,8 +2,7 @@
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/drebes/bind.svg)][hub]
 [![Docker Stars](https://img.shields.io/docker/stars/drebes/bind.svg)][hub]
-[![Image Size](https://img.shields.io/imagelayers/image-size/drebes/bind/latest.svg)](https://imagelayers.io/?images=drebes/bind:latest)
-[![Image Layers](https://img.shields.io/imagelayers/layers/drebes/bind/latest.svg)](https://imagelayers.io/?images=drebes/bind:latest)
+[![Image Layers](https://images.microbadger.com/badges/image/drebes/bind.svg)](https://microbadger.com/images/drebes/bind "Get your own image badge on microbadger.com")
 
 [hub]: https://hub.docker.com/r/drebes/bind/
 
