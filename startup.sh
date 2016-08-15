@@ -1,5 +1,7 @@
 #!/bin/bash
 
+BIND_KEY_NAME=${BIND_KEY_NAME:-${BIND_DOMAIN}}
+
 function generate_named_conf {
 echo generating /etc/named.conf
 cat <<- EOF > /etc/named.conf
@@ -73,16 +75,16 @@ ZONE_FILE=/var/named/dynamic/${BIND_DOMAIN}.db
 if [ ! -f  ${ZONE_FILE} ]; then
 echo generating ${ZONE_FILE}
 cat <<- EOF > ${ZONE_FILE} 
-	\$ORIGIN ${BIND_DOMAIN}.
+	\$ORIGIN ${BIND_DOMAIN}
 	\$TTL 86400
-	@           IN    SOA    $(hostname).${BIND_DOMAIN}.  hostmaster.${BIND_DOMAIN}. (
+	@           IN    SOA    $(hostname).${BIND_DOMAIN}  hostmaster.${BIND_DOMAIN} (
 	                         2011112904 ; serial
 	                         60         ; refresh (1 minute)
 	                         15         ; retry (15 seconds)
 	                         1800       ; expire (30 minutes)
 	                         10 )       ; minimum (10 seconds)
 	
-	            IN    NS     $(hostname).${BIND_DOMAIN}.
+	            IN    NS     $(hostname).${BIND_DOMAIN}
 	
 	$(hostname) IN 	  A      127.0.0.1
 EOF
@@ -96,14 +98,14 @@ echo generating ${ZONE_FILE}
 cat <<- EOF > ${ZONE_FILE} 
 	\$ORIGIN ${BIND_REVERSE_DOMAIN}. 
 	\$TTL 86400
-	@           IN    SOA    $(hostname).${BIND_DOMAIN}.  hostmaster.${BIND_DOMAIN}. (
+	@           IN    SOA    $(hostname).${BIND_DOMAIN}  hostmaster.${BIND_DOMAIN} (
 	                         2011112904 ; serial
 	                         60         ; refresh (1 minute)
 	                         15         ; retry (15 seconds)
 	                         1800       ; expire (30 minutes)
 	                         10 )        ; minimum (10 seconds)
 	
-	            IN    NS     $(hostname).${BIND_DOMAIN}.
+	            IN    NS     $(hostname).${BIND_DOMAIN}
 EOF
 fi
 }
