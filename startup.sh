@@ -4,6 +4,13 @@ BIND_KEY_NAME=${BIND_KEY_NAME:-${BIND_DOMAIN}}
 
 function generate_named_conf {
 echo generating /etc/named.conf
+
+if [ "${BIND_INSECURE}" = "true" ]; then
+  UPDATE="0.0.0.0/0"
+else 
+  UPDATE="key ${BIND_KEY_NAME}"
+fi
+
 cat <<- EOF > /etc/named.conf
 	options {
 	    listen-on port 53 { any; };
@@ -36,13 +43,13 @@ cat <<- EOF > /etc/named.conf
 	zone "${BIND_DOMAIN}" IN {
 	    type master;
 	    file "dynamic/${BIND_DOMAIN}.db";
-	    allow-update { key ${BIND_KEY_NAME} ; } ;
+	    allow-update { ${UPDATE} ; } ;
 	};
 	
 	zone "${BIND_REVERSE_DOMAIN}" IN {
 	    type master;
 	    file "dynamic/${BIND_REVERSE_DOMAIN}.db";
-	    allow-update { key ${BIND_KEY_NAME} ; } ;
+	    allow-update { ${UPDATE} ; } ;
 	};
 EOF
 }
