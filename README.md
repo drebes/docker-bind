@@ -33,7 +33,8 @@ The container can be configured with the following environment variables:
 - **BIND_UPSTREAM_DNS**: Comma-separated list (no spaces) of IP address to forward DNS requests to. Defaults to  `8.8.8.8,8.8.4.4`.
 - **BIND_KEY_NAME**: TSIG key name to be used when sending updates. Defaults to the value of `$BIND_DOMAIN`.
 - **BIND_KEY_SECRET**: TSIG key secret to be used when sending updates. Defaults to `c3VwZXJzZWNyZXQ=` (`supersecret` in Base64 encoding).
-- **BIND_KEY_ALGORITHM**: TSIG key algorithm to be used when sending updates. BIND supports the following algorithms: `hmac-md5`, `hmac-sha1`, `hmac-sha224`, `hmac-sha256`, `hmac-sha384` and `hmac-sha512`. Defaults to `hmac-md5`
+- **BIND_KEY_ALGORITHM**: TSIG key algorithm to be used when sending updates. BIND supports the following algorithms: `hmac-md5`, `hmac-sha1`, `hmac-sha224`, `hmac-sha256`, `hmac-sha384` and `hmac-sha512`. Defaults to `hmac-md5`.
+- **BIND_INSECURE**: if set to `true`, the server will not require TSIG authentication on updates, supporting instead standard RFC 2136 updates. Defaults to `false`.
 
 Environment variables can be set by adding the `--env` argument in the command line, for example:
 

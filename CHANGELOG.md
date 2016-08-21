@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0
+Allow disabling TSIG authentication by setting BIND_INSECURE=true
+
 ## 0.2.0
 Changed default domain to a FQDN, and the key name now defaults to BIND_DOMAIN as well.
 
