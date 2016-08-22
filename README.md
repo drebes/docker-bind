@@ -29,7 +29,7 @@ This starts a new container running BIND using the default configuration (see be
 The container can be configured with the following environment variables:
 
 - **BIND_DOMAIN**: DNS zone the server will accept updates to. It must be a FQDN, that is, include the trailing `.`. Defaults to `example.com.`.
-- **BIND_REVERSE_DOMAIN**: DNS zone the server will accept reverse record updates to. Defaults to `1.168.192.in-addr.arpa`.
+- **BIND_REVERSE_DOMAIN**: DNS zone the server will accept reverse record updates to. Defaults to `1.168.192.in-addr.arpa.`.
 - **BIND_UPSTREAM_DNS**: Comma-separated list (no spaces) of IP address to forward DNS requests to. Defaults to  `8.8.8.8,8.8.4.4`.
 - **BIND_KEY_NAME**: TSIG key name to be used when sending updates. Defaults to the value of `$BIND_DOMAIN`.
 - **BIND_KEY_SECRET**: TSIG key secret to be used when sending updates. Defaults to `c3VwZXJzZWNyZXQ=` (`supersecret` in Base64 encoding).
@@ -38,8 +38,8 @@ The container can be configured with the following environment variables:
 
 Environment variables can be set by adding the `--env` argument in the command line, for example:
 
-	docker run --env BIND_DOMAIN="my-company.com" --env BIND_REVERSE_DOMAIN="16.172.in-addr.arpa" \
-	--env BIND_KEY_NAME="update-key" --env BIND_KEY_ALGORITHM="hmac-sha512"\
+	docker run --env BIND_DOMAIN="my-company.com." --env BIND_REVERSE_DOMAIN="16.172.in-addr.arpa." \
+	--env BIND_KEY_NAME="update-key." --env BIND_KEY_ALGORITHM="hmac-sha512"\
 	--env BIND_KEY_SECRET="c3VwZXJjYWxpZnJhZ2lsaXN0aWNleHBpYWxpZG9jaW91cw==" drebes/bind
 
 Be aware that environment variables added in the command line are available at any time inside the container.

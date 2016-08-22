@@ -103,7 +103,7 @@ ZONE_FILE=/var/named/dynamic/${BIND_REVERSE_DOMAIN}.db
 if [ ! -f  ${ZONE_FILE} ]; then
 echo generating ${ZONE_FILE}
 cat <<- EOF > ${ZONE_FILE} 
-	\$ORIGIN ${BIND_REVERSE_DOMAIN}. 
+	\$ORIGIN ${BIND_REVERSE_DOMAIN} 
 	\$TTL 86400
 	@           IN    SOA    $(hostname).${BIND_DOMAIN}  hostmaster.${BIND_DOMAIN} (
 	                         2011112904 ; serial

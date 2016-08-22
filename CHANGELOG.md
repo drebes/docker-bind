@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.1
+Fix all references to use FQDNs, including in the reverse zone.
+
 ## 0.3.0
 Allow disabling TSIG authentication by setting BIND_INSECURE=true
 
