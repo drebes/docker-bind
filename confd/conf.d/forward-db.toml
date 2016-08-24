@@ -1,0 +1,10 @@
+[template]
+prefix = "/bind"
+src = "forward-db.tmpl"
+dest = "/var/named/dynamic/forward.db"
+uid = 25
+gid = 25
+mode = "0640"
+keys = [
+  "/domain/forward",
+]

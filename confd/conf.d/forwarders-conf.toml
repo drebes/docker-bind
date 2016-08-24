@@ -1,0 +1,10 @@
+[template]
+prefix = "/bind"
+src = "forwarders-conf.tmpl"
+dest = "/var/named/forwarders.conf"
+uid = 25
+gid = 25
+mode = "0640"
+keys = [
+  "/upstream",
+]

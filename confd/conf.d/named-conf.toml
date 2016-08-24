@@ -1,0 +1,13 @@
+[template]
+prefix = "/bind"
+src = "named-conf.tmpl"
+dest = "/etc/named.conf"
+uid = 0
+gid = 25
+mode = "0640"
+keys = [
+  "/domain/forward",
+  "/domain/reverse",
+  "/key/name",
+  "/insecure",
+]

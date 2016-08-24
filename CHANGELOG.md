@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.0
+Use [confd](http://www.confd.io/)
+
 ## 0.3.1
 Fix all references to use FQDNs, including in the reverse zone.
 

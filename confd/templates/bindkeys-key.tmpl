@@ -1,0 +1,4 @@
+{{if exists "/key/name"}} key {{getv "/key/name"}} { {{else}}key {{getv "/domain/forward"}} { {{end}}
+  algorithm {{getv "/key/algorithm"}};
+  secret "{{getv "/key/secret"}}";
+};

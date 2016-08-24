@@ -28,17 +28,17 @@ This starts a new container running BIND using the default configuration (see be
 ## Environment Variables
 The container can be configured with the following environment variables:
 
-- **BIND_DOMAIN**: DNS zone the server will accept updates to. It must be a FQDN, that is, include the trailing `.`. Defaults to `example.com.`.
-- **BIND_REVERSE_DOMAIN**: DNS zone the server will accept reverse record updates to. Defaults to `1.168.192.in-addr.arpa.`.
-- **BIND_UPSTREAM_DNS**: Comma-separated list (no spaces) of IP address to forward DNS requests to. Defaults to  `8.8.8.8,8.8.4.4`.
-- **BIND_KEY_NAME**: TSIG key name to be used when sending updates. Defaults to the value of `$BIND_DOMAIN`.
+- **BIND_DOMAIN_FORWARD**: DNS zone the server will accept updates to. It must be a FQDN, that is, include the trailing `.`. Defaults to `example.com.`.
+- **BIND_DOMAIN_REVERSE**: DNS zone the server will accept reverse record updates to. Defaults to `1.168.192.in-addr.arpa.`.
+- **BIND_UPSTREAM**: Comma-separated list (no spaces) of IP address to forward DNS requests to. Defaults to  `8.8.8.8,8.8.4.4`.
+- **BIND_KEY_NAME**: TSIG key name to be used when sending updates. Defaults to the value of `$BIND_DOMAIN_FORWARD`.
 - **BIND_KEY_SECRET**: TSIG key secret to be used when sending updates. Defaults to `c3VwZXJzZWNyZXQ=` (`supersecret` in Base64 encoding).
 - **BIND_KEY_ALGORITHM**: TSIG key algorithm to be used when sending updates. BIND supports the following algorithms: `hmac-md5`, `hmac-sha1`, `hmac-sha224`, `hmac-sha256`, `hmac-sha384` and `hmac-sha512`. Defaults to `hmac-md5`.
-- **BIND_INSECURE**: if set to `true`, the server will not require TSIG authentication on updates, supporting instead standard RFC 2136 updates. Defaults to `false`.
+- **BIND_INSECURE**: if set (to any value), the server will not require TSIG authentication on updates, supporting instead standard RFC 2136 updates. Defaults to unset.
 
 Environment variables can be set by adding the `--env` argument in the command line, for example:
 
-	docker run --env BIND_DOMAIN="my-company.com." --env BIND_REVERSE_DOMAIN="16.172.in-addr.arpa." \
+	docker run --env BIND_DOMAIN_FORWARD="my-company.com." --env BIND_DOMAIN_REVERSE="16.172.in-addr.arpa." \
 	--env BIND_KEY_NAME="update-key." --env BIND_KEY_ALGORITHM="hmac-sha512"\
 	--env BIND_KEY_SECRET="c3VwZXJjYWxpZnJhZ2lsaXN0aWNleHBpYWxpZG9jaW91cw==" drebes/bind
 

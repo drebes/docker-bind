@@ -1,0 +1,13 @@
+[template]
+prefix = "/bind"
+src = "bindkeys-key.tmpl"
+dest = "/var/named/bindkeys.key"
+uid = 25
+gid = 25
+mode = "0640"
+keys = [
+  "/domain/forward",
+  "/key/name",
+  "/key/algorithm",
+  "/key/secret",
+]

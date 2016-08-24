@@ -1,0 +1,10 @@
+$TTL 86400
+@           IN    SOA    {{getenv "HOSTNAME"}}.{{getv "/domain/forward"}}  hostmaster.{{getv "/domain/forward"}} (
+                         2011112904 ; serial
+                         60         ; refresh (1 minute)
+                         15         ; retry (15 seconds)
+                         1800       ; expire (30 minutes)
+                         10 )       ; minimum (10 seconds)
+
+            IN    NS     {{getenv "HOSTNAME"}}.{{getv "/domain/forward"}}
+
