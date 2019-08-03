@@ -1,0 +1,9 @@
+bind:
+  domain:
+    forward: example.com.
+    reverse: 1.168.192.in-addr.arpa.
+  upstream: 8.8.8.8,8.8.4.4
+  key:
+    name: example.com.
+    secret: c3VwZXJzZWNyZXQ=
+    algorithm: hmac-md5

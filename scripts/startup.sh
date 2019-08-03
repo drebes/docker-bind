@@ -20,7 +20,13 @@ generate_rndc_key
 
 chown -R named:named /var/named/dynamic
 
-/confd -onetime -backend env
+CONF_YAML=/conf/bind.yaml
+if [ -f $CONF_YAML ]; then
+    /confd -onetime -backend file -file $CONF_YAML
+else
+    . ./env_defaults.sh
+    /confd -onetime -backend env
+fi
 
 named -g -u named &
 child=$! 
