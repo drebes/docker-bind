@@ -40,7 +40,7 @@ The container can be configured with the following environment variables:
 Environment variables can be set by adding the `--env` argument in the command line, for example:
 
 	docker run --env BIND_DOMAIN_FORWARD="my-company.com." --env BIND_DOMAIN_REVERSE="16.172.in-addr.arpa." \
-	--env BIND_KEY_NAME="update-key." --env BIND_KEY_ALGORITHM="hmac-sha512"\
+	--env BIND_KEY_NAME="update-key." --env BIND_KEY_ALGORITHM="hmac-sha512" \
 	--env BIND_KEY_SECRET="c3VwZXJjYWxpZnJhZ2lsaXN0aWNleHBpYWxpZG9jaW91cw==" drebes/bind
 
 Be aware that environment variables added in the command line are available at any time inside the container.
