@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.1
+* fix: honor variables from command line
+
 ## 0.5.0
 * confd version pinned to  0.16.0
 * centos base image version pinned to 7.6.1810
